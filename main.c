@@ -11,6 +11,7 @@ int main(){
         pos = 0;
 
     int opcao;
+  
     do{
         printf("\nMenu principal\n");
         printf("1 - Criar tarefa\n");
@@ -21,14 +22,20 @@ int main(){
 
         scanf("%d", &opcao);
         opcao--;
-        if(opcao > 2)
+        if(opcao > 2){
             printf("Opcao invalida\n");
-        else if(opcao >= 0)
-            fs[opcao](tarefas, &pos);
-        else
-            printf("Sair...\n");
+        }else if(opcao >= 0)
+           erro= fs[opcao](tarefas, &pos);
+        if(erro !=OK){
+          printf("Erro ao executar a operação %d\n",erro);
+        break;
+        }
+           else{
+             printf("sair...\n");
+           }
 
-    } while(opcao >= 0);
-
+    } while(erro !=OK);
+ 
     fs[3](tarefas, &pos);
+  return OK;
 }

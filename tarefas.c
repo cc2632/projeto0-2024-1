@@ -10,10 +10,13 @@ ERROS criar(Tarefa tarefas[], int *pos){
     scanf("%d", &tarefas[*pos].prioridade);
     clearBuffer();
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
-
+    scanf("%[^\n]", tarefas[*pos].categoria);
+    clearBuffer();
+    //fgets(tarefas[*pos].categoria, 100, stdin);
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
+    scanf("%[^\n]", tarefas[*pos].descricao);
+    clearBuffer();
+    //fgets(tarefas[*pos].descricao, 300, stdin);
 
     *pos = *pos + 1;
 

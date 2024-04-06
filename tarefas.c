@@ -11,7 +11,6 @@ ERROS criar(Tarefa tarefas[], int *pos) {
   scanf("%d", &tarefas[*pos].prioridade);
   clearBuffer();
   if (tarefas[*pos].prioridade < MIN_TAREFA || tarefas[*pos].prioridade > TOTAL_TAREFA) {
-    printf("Prioridade invalida\n");
     return MAX_PRIORIDADE;
   }
   printf("Entre com a categoria: ");

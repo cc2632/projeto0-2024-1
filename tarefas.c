@@ -15,8 +15,8 @@ ERROS criar(Tarefa tarefas[], int *pos){
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, 300, stdin);
 
-    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = 0;
-    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = 0;
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = 0; //Essa função localiza dentro de tarefas.categoria a primeira vez que \n aparece e o substitui por \0
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = 0; //Essa função localiza dentro de tarefas.categoria a primeira vez que \n aparece e o substitui por \0
 
     *pos = *pos + 1;
 

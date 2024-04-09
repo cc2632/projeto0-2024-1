@@ -9,12 +9,15 @@ ERROS criar(Tarefa tarefas[], int *pos){
     printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
     clearBuffer();
-    printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
 
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, 300, stdin);
+    
 
+    printf("Entre com a categoria: ");
+    fgets(tarefas[*pos].categoria, 100, stdin);
+
+    
     *pos = *pos + 1;
 
     return OK;
@@ -58,7 +61,7 @@ ERROS listar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
-ERROS salvar(Tarefa tarefas[], int *pos){
+ERROS salvar(Tarefa tarefas[], int pos, int tamanho){
     FILE *f = fopen("tarefas.bin", "wb");
     if(f == NULL)
         return ABRIR;
@@ -77,23 +80,24 @@ ERROS salvar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
-ERROS carregar(Tarefa tarefas[], int *pos){
-    FILE *f = fopen("tarefas.bin", "rb");
-    if(f == NULL)
-        return ABRIR;
+ERROS carregar(Tarefa tarefas[], int *pos, int tamanho){
+  FILE *f = fopen("tarefas", "rb");
+  if (f == NULL)
+    return ABRIR;
 
-    int qtd = fread(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return LER;
+  int i = fread(tarefas, tamanho, sizeof(Tarefa), f);
+  if(i <= 0)
+    return LER;
 
-    qtd = fread(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return LER;
-
-    if(fclose(f))
-        return FECHAR;
-
-    return OK;
+  i = fread(pos, 1, sizeof(int), f);
+  if(i <= 0)
+    return LER;
+  
+  i = fclose(f);
+  if(i == 0)
+    return FECHAR;
+  
+  return OK;
 
 }
 

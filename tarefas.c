@@ -10,10 +10,13 @@ ERROS criar(Tarefa tarefas[], int *pos){
     scanf("%d", &tarefas[*pos].prioridade);
     clearBuffer();
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
 
+    fgets(tarefas[*pos].categoria, 100, stdin);
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, 300, stdin);
+
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = 0;
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = 0;
 
     *pos = *pos + 1;
 
@@ -33,7 +36,9 @@ ERROS deletar(Tarefa tarefas[], int *pos){
     if(pos_deletar >= *pos || pos_deletar < 0)
         return NAO_ENCONTRADO;
 
-    for(int i = pos_deletar; i < *pos; i++){
+    int i = pos_deletar;
+
+    for(i; i < *pos; i++){
         tarefas[i].prioridade = tarefas[i+1].prioridade;
         strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
         strcpy(tarefas[i].descricao,  tarefas[i+1].descricao);
@@ -48,7 +53,9 @@ ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
 
-    for(int i=0; i<*pos; i++){
+    int i=0;
+
+    for(i; i<*pos; i++){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);
         printf("Categoria: %s\t", tarefas[i].categoria);

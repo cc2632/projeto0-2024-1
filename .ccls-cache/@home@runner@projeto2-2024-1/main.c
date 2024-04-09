@@ -32,3 +32,4 @@ int main(){
 
     fs[3](tarefas, &pos);
 }
+//oi

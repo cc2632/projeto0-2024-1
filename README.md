@@ -6,6 +6,6 @@
 <p> A função "Listar" assim como o nome já diz tem como funcionalidade listar as tarefas do usuário, sendo listada apenas as tarefas que se relacionam de acordo com a categoria solicitada. </p> <br>
 
 <h3>Autores:</h3> <br>
-<p> - Aline Rocha de Jesus (22.123.106-1)</p> <br>
-<p> - Bianca Silva Oliveira (22.123.113-7)</p> <br>
+<p> - Aline Rocha de Jesus (22.123.106-1)</p> 
+<p> - Bianca Silva Oliveira (22.123.113-7)</p> 
 <p> - Luana Almeida (22.123.109-5)</p>

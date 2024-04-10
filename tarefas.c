@@ -6,9 +6,20 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: ");
-    scanf("%d", &tarefas[*pos].prioridade);
-    clearBuffer();
+ 
+  int prioridade;
+// Do while para forçar que o usuario entre com a prioridade entre 1 e 10
+  do {
+      printf("Entre com a prioridade: ");
+      scanf("%d", &prioridade);
+      clearBuffer();
+      if (prioridade < 1 || prioridade > 10)
+          printf("Digite um valor entre 1 e 10");
+  } while (prioridade < 1 || prioridade > 10);
+
+  tarefas[*pos].prioridade = prioridade;
+
+
     printf("Entre com a categoria: ");
     fgets(tarefas[*pos].categoria, 100, stdin);
 

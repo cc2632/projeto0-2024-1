@@ -97,6 +97,10 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 
 }
 
+ERROS listar_por_categoria(Tarefa tarefas[], int *pos){
+    // Implementação para listar tarefas por categoria
+}
+
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);

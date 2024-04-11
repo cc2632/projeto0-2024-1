@@ -25,11 +25,17 @@ int main(){
             printf("Opcao invalida\n");
         else if(opcao >= 0)
             fs[opcao](tarefas, &pos);
-        else
+        else {
             printf("Sair...\n");
+            fs[3](tarefas, &pos); 
+            exit(0);
+        }
+      } while(opcao >= 0);
 
+          return 0; 
+      }
     } while(opcao >= 0);
 
     fs[3](tarefas, &pos);
 }
-//oi
+

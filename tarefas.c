@@ -6,18 +6,18 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: ");
+       printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
     clearBuffer();
 
-    printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
-    
-
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
+    fgets(tarefas[*pos].categoria, sizeof(tarefas[*pos].categoria), stdin);
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = '\0'; // Remove a quebra de linha
 
-    
+    printf("Entre com a descricao: ");
+    fgets(tarefas[*pos].descricao, sizeof(tarefas[*pos].descricao), stdin);
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = '\0'; // Remove a quebra de linha
+
     *pos = *pos + 1;
 
     return OK;

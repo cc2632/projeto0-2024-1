@@ -23,12 +23,21 @@ int main(){
         opcao--;
         if(opcao > 2)
             printf("Opcao invalida\n");
+            
         else if(opcao >= 0)
             fs[opcao](tarefas, &pos);
+            if (erro != OK){//retornando um erro
+              printf("Erro ao encontrar\n");
+              return NAO_ENCONTRADO;
+            }
         else
             printf("Sair...\n");
 
     } while(opcao >= 0);
 
     fs[3](tarefas, &pos);
+    if(erro != OK){//retornando um erro 
+      printf("Erro ao escrever\n");
+      return  ESCREVER;
+    }
 }

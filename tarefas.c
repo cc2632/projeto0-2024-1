@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "tarefas.h"
+#define categoria_categoria 100
+#define descricao_descricao 300
 
 ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
@@ -13,10 +15,10 @@ ERROS criar(Tarefa tarefas[], int *pos){
     else
       clearBuffer();
       printf("Entre com a categoria: ");
-      fgets(tarefas[*pos].categoria, 100, stdin);
+      fgets(tarefas[*pos].categoria, categoria_categoria, stdin);
       clearBuffer();//eliminando a quebra de linha
       printf("Entre com a descricao: ");
-      fgets(tarefas[*pos].descricao, 300, stdin);
+      fgets(tarefas[*pos].descricao, descricao_descricao, stdin);
       clearBuffer();//tirando a quebra de linha 
     
       *pos = *pos + 1;

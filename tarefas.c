@@ -1,103 +1,127 @@
+#include "tarefas.h"
 #include <stdio.h>
 #include <string.h>
-#include "tarefas.h"
+#define TOTAL 100
 
-ERROS criar(Tarefa tarefas[], int *pos){
-    if(*pos >= TOTAL)
-        return MAX_TAREFA;
-
-    printf("Entre com a prioridade: ");
-    scanf("%d", &tarefas[*pos].prioridade);
-    clearBuffer();
-    printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
-
-    printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
-
-    *pos = *pos + 1;
-
-    return OK;
+void tira_quebra_linha(char *str) {
+  int len = strlen(str);
+  if (len > 0 && str[len - 1] == '\n') {
+    str[len - 1] = '\0';
+  }
 }
 
-ERROS deletar(Tarefa tarefas[], int *pos){
-    // teste se existem tarefas
-    if(*pos == 0)
-        return SEM_TAREFAS;
+ERROS criar(Tarefa tarefas[], int *pos) {
+  if (*pos >= TOTAL)
+    return MAX_TAREFA;
 
-    // verifica se a tarefa escolhida existe
-    int pos_deletar;
-    printf("Entre com a posicao da tarefa a ser deletada: ");
-    scanf("%d", &pos_deletar);
-    pos_deletar--; // garantir posicao certa no array
-    if(pos_deletar >= *pos || pos_deletar < 0)
-        return NAO_ENCONTRADO;
+  printf("Entre com a prioridade: ");
+  scanf("%d", &tarefas[*pos].prioridade);
+  if (tarefas[*pos].prioridade < 1 || tarefas[*pos].prioridade > 10) {
+    printf("Prioridade inválida , o limite é entre 1 e 10 tente novamente!\n");
+    return OK; // Retorna OK aqui para indicar que a tarefa não foi criada devido à prioridade inválida
+  }
 
-    for(int i = pos_deletar; i < *pos; i++){
-        tarefas[i].prioridade = tarefas[i+1].prioridade;
-        strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
-        strcpy(tarefas[i].descricao,  tarefas[i+1].descricao);
-    }
+  clearBuffer(); // Limpa o buffer do teclado para evitar problemas de entrada
 
-    *pos = *pos - 1;
+  printf("Entre com a categoria: ");
+  fgets(tarefas[*pos].categoria, 100, stdin);
+  tira_quebra_linha(tarefas[*pos].categoria);
 
-    return OK;
+  printf("Entre com a descricao: ");
+  fgets(tarefas[*pos].descricao, 300, stdin);
+  tira_quebra_linha(tarefas[*pos].descricao);
+
+  *pos = *pos + 1;
+
+  return OK;
 }
 
-ERROS listar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
-        return SEM_TAREFAS;
+ERROS deletar(Tarefa tarefas[], int *pos) {
+  // teste se existem tarefas
+  if (*pos == 0)
+    return SEM_TAREFAS;
 
-    for(int i=0; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
-    }
+  // verifica se a tarefa escolhida existe
+  int pos_deletar;
+  printf("Entre com a posicao da tarefa a ser deletada: ");
+  scanf("%d", &pos_deletar);
+  pos_deletar--; // garantir posicao certa no array
+  if (pos_deletar >= *pos || pos_deletar < 0)
+    return NAO_ENCONTRADO;
 
-    return OK;
+  for (int i = pos_deletar; i < *pos - 1; i++) {
+    tarefas[i].prioridade = tarefas[i + 1].prioridade;
+    strcpy(tarefas[i].categoria, tarefas[i + 1].categoria);
+    strcpy(tarefas[i].descricao, tarefas[i + 1].descricao);
+  }
+
+  *pos = *pos - 1;
+
+  return OK;
 }
 
-ERROS salvar(Tarefa tarefas[], int *pos){
-    FILE *f = fopen("tarefas.bin", "wb");
-    if(f == NULL)
-        return ABRIR;
+ERROS listar(Tarefa tarefas[], int pos) {
+  if (pos == 0)
+    return SEM_TAREFAS;
 
-    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return ESCREVER;
+  for (int i = 0; i < pos; i++) {
+    printTarefas(tarefas[i], i); // Corrigido para passar a posição correta da tarefa
+  }
 
-    qtd = fwrite(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return ESCREVER;
-
-    if(fclose(f))
-        return FECHAR;
-
-    return OK;
+  return OK;
 }
 
-ERROS carregar(Tarefa tarefas[], int *pos){
-    FILE *f = fopen("tarefas.bin", "rb");
-    if(f == NULL)
-        return ABRIR;
+ERROS salvar(Tarefa tarefas[], int *pos) {
+  FILE *f = fopen("tarefas.bin", "wb");
+  if (f == NULL)
+    return ABRIR;
 
-    int qtd = fread(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return LER;
+  int qtd = fwrite(tarefas, *pos, sizeof(Tarefa), f);
+  if (qtd != *pos)
+    return ESCREVER;
 
-    qtd = fread(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return LER;
+  qtd = fwrite(pos, sizeof(int), 1, f);
+  if (qtd != 1)
+    return ESCREVER;
 
-    if(fclose(f))
-        return FECHAR;
+  if (fclose(f) != 0)
+    return FECHAR;
 
-    return OK;
-
+  return OK;
 }
 
-void clearBuffer(){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+ERROS carregar(Tarefa tarefas[], int *pos) {
+  FILE *f = fopen("tarefas.bin", "rb");
+  if (f == NULL)
+    return ABRIR;
+
+  int qtd = fread(tarefas, *pos, sizeof(Tarefa), f); // Corrigido para ler a quantidade correta de tarefas
+  if (qtd == 0)
+    return LER;
+
+  qtd = fread(pos, sizeof(int), 1, f); // Corrigido para ler a posição correta
+  if (qtd != 1)
+    return LER;
+
+  if (fclose(f) != 0)
+    return FECHAR;
+
+  return OK;
 }
+
+void printTarefas(Tarefa t, int pos) {
+  printf("Posição da tarefa: %d\n", pos + 1); // Corrigido para imprimir a posição correta
+  printf("Prioridade: %d\n", t.prioridade);
+  printf("Categoria: %s\n", t.categoria);
+  printf("Descrição: %s\n", t.descricao);
+}
+
+void clearBuffer() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    continue;
+  }
+}
+
+
+// para rodar o codigo basta usar o comando gcc *.c && ./a.out

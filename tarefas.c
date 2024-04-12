@@ -1,4 +1,6 @@
-#include "tarefas.h"
+// tarefas.c
+
+#include "tarefass.h"
 #include <stdio.h>
 #include <string.h>
 #define TOTAL 100
@@ -61,15 +63,28 @@ ERROS deletar(Tarefa tarefas[], int *pos) {
 }
 
 ERROS listar(Tarefa tarefas[], int pos) {
-  if (pos == 0)
-    return SEM_TAREFAS;
+    if (pos == 0)
+        return SEM_TAREFAS;
 
-  for (int i = 0; i < pos; i++) {
-    printTarefas(tarefas[i], i); // Corrigido para passar a posição correta da tarefa
-  }
+    char categoria[100];
+    printf("Entre com a categoria das tarefas que deseja listar (ou deixe vazio para listar todas as tarefas): ");
+    fgets(categoria, 100, stdin);
+    tira_quebra_linha(categoria);
 
-  return OK;
+    int encontradas = 0;
+    for (int i = 0; i < pos; i++) {
+        if (categoria[0] == '\0' || strcmp(tarefas[i].categoria, categoria) == 0) {
+            printTarefas(tarefas[i], i);
+            encontradas++;
+        }
+    }
+
+    if (encontradas == 0)
+        printf("Nenhuma tarefa encontrada com a categoria especificada.\n");
+
+    return OK;
 }
+
 
 ERROS salvar(Tarefa tarefas[], int *pos) {
   FILE *f = fopen("tarefas.bin", "wb");

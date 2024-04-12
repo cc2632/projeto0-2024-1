@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tarefas.h"
+#include <stdlib.h>
 
 int main(){
     funcao fs[] = {criar, deletar, listar, salvar, carregar};
@@ -16,11 +17,23 @@ int main(){
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
+        printf("5 - Carregar tarefa Binário\n");
+        printf("6 - Salvar tarefa em Binário\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
 
         scanf("%d", &opcao);
         opcao--;
+        ERROS erro = salvarbinario(tarefas, &pos);
+        if (erro != OK)
+            printf("Erro ao salvar as tarefas\n");
+        else
+            printf("Tarefas salvas \n");
+
+        else if (opcao == 4){
+            ERROS erro = carregarbinario
+        }
+
         if(opcao > 2)
             printf("Opcao invalida\n");
             

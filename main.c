@@ -1,15 +1,8 @@
-//Erik Kenzo Hashizume RA: 24.223.001-9
-//Gustavo Lima de Azevedo RA: 24.123.096-0
-//Rafael Vianna Maistro RA: 24.223.011-8
-
-
-
-// main.c
 #include <stdio.h>
 #include "tarefas.h"
 
 int main() {  
-    funcao *fs[] = {criar, deletar, listar, salvar, carregar};
+    funcao *fs[] = {criar, deletar, listar, salvar, carregar, exportarTarefas};
 
     Tarefa tarefas[TOTAL];
     int pos = 0;
@@ -27,16 +20,24 @@ int main() {
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
+        printf("4 - Exportar tarefas para arquivo\n"); 
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
+        clearBuffer(); 
 
         if (opcao == 1) {
             fs[0](tarefas, &pos); 
         } else if (opcao == 2) {
             fs[1](tarefas, &pos);
         } else if (opcao == 3) {
-            fs[2](tarefas, pos);
+            fs[2](tarefas, pos); 
+        } else if (opcao == 4) {
+
+            fs[5](tarefas, &pos ); 
+          printf("Entre com o nome do arquivo para exportacao: ");
+          char nomeArquivo[100];
+          scanf("%s", nomeArquivo);
         } else if (opcao == 0) {
             printf("Sair...\n");
             break;
@@ -44,7 +45,8 @@ int main() {
             printf("opção inválida\n");
         }
     } while (opcao != 0);
+
     return 0;
 }
 
- // para rodar o codigo basta usar o comando gcc *.c && ./a.out
+// para rodar o codigo basta usar o comando gcc *.c && ./a.out

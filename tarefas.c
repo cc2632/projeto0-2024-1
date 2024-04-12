@@ -59,22 +59,37 @@ ERROS listar(Tarefa tarefas[], int *pos){
 }
 
 ERROS salvar(Tarefa tarefas[], int *pos){
-    FILE *f = fopen("tarefas.bin", "wb");
-    if(f == NULL)
-        return ABRIR;
 
-    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return ESCREVER;
+  char txt[] = ".txt";
+  char nomeArq[100];
+  printf("Entre com o nome do arquivo: ");
+  clearBuffer();
+  fgets(nomeArq, 100, stdin);
+  nomeArq[strcspn(nomeArq, "\n")] = '\0';
+  strcat(nomeArq, txt);
 
-    qtd = fwrite(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return ESCREVER;
+  FILE *f = fopen(nomeArq, "w");
+  if (f == NULL)
+    return ABRIR;
 
-    if(fclose(f))
-        return FECHAR;
+  for (int i = 0; i < *pos; i++) {
+    fprintf(f, "Prioridade:     %d", tarefas[i].prioridade);
+    fprintf(f, "Categoria:       %s", tarefas[i].categoria);
+    fprintf(f, "Descricao:       %s", tarefas[i].descricao);
+  }
 
-    return OK;
+  // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+  // if (qtd == 0)
+  //   return ESCREVER;
+
+  // qtd = fwrite(pos, 1, sizeof(int), f);
+  // if (qtd == 0)
+  //   return ESCREVER;
+
+  if (fclose(f))
+    return FECHAR;
+  printf("Salvo e exportado com sucesso!");
+  return OK;
 }
 
 ERROS carregar(Tarefa tarefas[], int *pos){

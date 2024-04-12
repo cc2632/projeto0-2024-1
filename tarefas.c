@@ -153,9 +153,51 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 
     if(fclose(f))
         return FECHAR;
+
     
     return OK;
 
+}
+
+ERROS exportar_binario(Tarefa tarefas[], int pos) {
+    FILE *arquivo = fopen("tarefas.bin", "wb"); // Abre o arquivo para escrita binária
+
+    if (arquivo == NULL) {
+        return ABRIR;
+    }
+
+    // Escreve os dados das tarefas no arquivo
+    int qtd = fwrite(tarefas, sizeof(Tarefa), pos, arquivo);
+
+    if (qtd != pos) {
+        fclose(arquivo);
+        return ESCREVER;
+    }
+
+    fclose(arquivo);
+    printf("Tarefas exportadas com sucesso para o arquivo binário.\n");
+    return OK;
+}
+
+ERROS carregar_binario(Tarefa tarefas[], int *pos) {
+    FILE *arquivo = fopen("tarefas.bin", "rb"); // Abre o arquivo para leitura binária
+
+    if (arquivo == NULL) {
+        return ABRIR;
+    }
+
+    // Lê os dados das tarefas do arquivo
+    int qtd = fread(tarefas, sizeof(Tarefa), TOTAL, arquivo);
+
+    if (qtd <= 0) {
+        fclose(arquivo);
+        return LER;
+    }
+
+    *pos = qtd;
+    fclose(arquivo);
+    printf("Tarefas carregadas com sucesso de arquivo binário.\n");
+    return OK;
 }
 
 void clearBuffer(){

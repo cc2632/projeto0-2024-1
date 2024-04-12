@@ -13,13 +13,17 @@ ERROS criar(Tarefa tarefas[], int *pos){
   } else if(tarefas[*pos].prioridade > 10){
     tarefas[*pos].prioridade = 10;
   }
+
+
   clearBuffer();
     clearBuffer();
-    printf("Entre com a categoria: ");
+    printf("Entre com a categoria: \n");
     fgets(tarefas[*pos].categoria, 100, stdin);
+    scanf("%c", &tarefas[*pos].categoria);
 
-    printf("Entre com a descricao: ");
+    printf("Entre com a descricao: \n");
     fgets(tarefas[*pos].descricao, 300, stdin);
+    scanf("%c", &tarefas[*pos].descricao);
 
     *pos = *pos + 1;
 

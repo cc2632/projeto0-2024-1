@@ -1,6 +1,7 @@
+#include "tarefas.h"
 #include <stdio.h>
 #include <string.h>
-#include "tarefas.h"
+
 
 ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
@@ -45,41 +46,57 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 }
 
 ERROS listar(Tarefa tarefas[], int *pos) {
-    if (*pos == 0)
-        return SEM_TAREFAS;
+      if (*pos == 0)
+          return SEM_TAREFAS;
+      char categoria_desejada[100];
+       clearBuffer();
+          printf("Entre com a categoria desejada (deixe em branco para listar todas): ");
+          // scanf(" %99[^\n]", categoria_desejada);
+          fgets(categoria_desejada, 100, stdin);
 
-    char categoria_desejada[100];
-    printf("Entre com a categoria desejada (deixe em branco para listar todas): ");
-    fgets(categoria_desejada, 100, stdin);
 
-    if (categoria_desejada[0] == '\n') {
-        // Esse Lista todas as tarefas existentes
-        for (int i = 0; i < *pos; i++) {
-            printf("Pos: %d\t", i + 1);
-            printf("Prioridade: %d\t", tarefas[i].prioridade);
-            printf("Categoria: %s\t", tarefas[i].categoria);
-            printf("Descricao: %s\n", tarefas[i].descricao);
-        }
-    } else {
-        // Esse bloco Lista as tarefas com a categoria que o usuário colocou
-        int encontrou_tarefa = 0;
-        for (int i = 0; i < *pos; i++) {
-            if (strcmp(tarefas[i].categoria, categoria_desejada) == 0) {
-                printf("Pos: %d\t", i + 1);
-                printf("Prioridade: %d\t", tarefas[i].prioridade);
-                printf("Categoria: %s\t", tarefas[i].categoria);
-                printf("Descricao: %s\n", tarefas[i].descricao);
-                encontrou_tarefa = 1;
-            }
-        }
-        if (!encontrou_tarefa) {
-            printf("Nenhuma tarefa encontrada com a categoria '%s'\n", categoria_desejada);
-            return NAO_ENCONTRADO;
-        }
-    }
+          printf("Tarefas com a categoria '%s'", categoria_desejada);
+              int encontrou_tarefa = 0;
 
-    return OK;
-}
+              for (int i = 0; i < *pos; i++) {
+                  if (strcmp(tarefas[i].categoria, categoria_desejada) == 0) {
+                      printf("Pos: %d\t", i + 1);
+                      printf("Prioridade: %d\t", tarefas[i].prioridade);
+                      printf("Categoria: %s\t", tarefas[i].categoria);
+                      printf("Descricao: %s\n", tarefas[i].descricao);
+                      encontrou_tarefa = 1;
+                  }
+              }
+  
+              if (!encontrou_tarefa) {
+                printf("Nenhuma tarefa encontrada com a categoria '%s'\n", categoria_desejada);
+              }else{
+                printf("---- listando todas as tarefas ---- \n");
+
+                    for(int i=0; i<*pos; i++){
+                      printf("Pos: %d\t", i+1);
+                      printf("Prioridade: %d\t", tarefas[i].prioridade);
+                      printf("Categoria: %s\t", tarefas[i].categoria);
+                      printf("Descricao: %s\n", tarefas[i].descricao);
+                    }
+              }
+
+              
+              // se categoria desejada tiver vazio imprime isso
+              //printf("---- listando todas as tarefas ---- \n");
+
+              //     for(int i=0; i<*pos; i++){
+              //       printf("Pos: %d\t", i+1);
+              //       printf("Prioridade: %d\t", tarefas[i].prioridade);
+              //       printf("Categoria: %s\t", tarefas[i].categoria);
+              //       printf("Descricao: %s\n", tarefas[i].descricao);
+              //     }
+
+              // se categoria desejada tiver com um valor que nao possui na categoria 
+              // retorno um printf com um aviso de que nao encontrou
+     return OK;
+  }
+     
 
 
 ERROS salvar(Tarefa tarefas[], int *pos){

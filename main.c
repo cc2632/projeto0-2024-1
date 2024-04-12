@@ -20,7 +20,9 @@ int main() {
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
-        printf("4 - Exportar tarefas para arquivo\n"); 
+        printf("4 - Exportar tarefas para arquivo\n");
+        printf("5 - Carregar tarefas do arquivo\n"); // Opção adicionada
+        printf("6 - Salvar tarefas em arquivo binário\n"); // Opção adicionada
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -33,11 +35,28 @@ int main() {
         } else if (opcao == 3) {
             fs[2](tarefas, pos); 
         } else if (opcao == 4) {
+            fs[5](tarefas, &pos); // Chama a função de exportar tarefas
 
-            fs[5](tarefas, &pos ); 
-          printf("Entre com o nome do arquivo para exportacao: ");
-          char nomeArquivo[100];
-          scanf("%s", nomeArquivo);
+        } else if (opcao == 5) {
+            erro = carregar(tarefas, &pos); // Chama a função de carregar tarefas
+            if (erro == ABRIR)
+                printf("Erro ao abrir o arquivo para leitura.\n");
+            else if (erro == LER)
+                printf("Erro ao ler o arquivo.\n");
+            else if (erro == FECHAR)
+                printf("Erro ao fechar o arquivo.\n");
+            else
+                printf("Tarefas carregadas com sucesso do arquivo.\n");
+        } else if (opcao == 6) {
+            erro = salvar(tarefas, &pos); // Chama a função de salvar tarefas
+            if (erro == ABRIR)
+                printf("Erro ao abrir o arquivo para escrita.\n");
+            else if (erro == ESCREVER)
+                printf("Erro ao escrever no arquivo.\n");
+            else if (erro == FECHAR)
+                printf("Erro ao fechar o arquivo.\n");
+            else
+                printf("Tarefas salvas com sucesso no arquivo.\n");
         } else if (opcao == 0) {
             printf("Sair...\n");
             break;
@@ -48,5 +67,3 @@ int main() {
 
     return 0;
 }
-
-// para rodar o codigo basta usar o comando gcc *.c && ./a.out

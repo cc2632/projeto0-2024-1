@@ -1,3 +1,9 @@
+//Erik Kenzo Hashizume RA: 24.223.001-9
+//Gustavo Lima de Azevedo RA: 24.123.096-0
+//Rafael Vianna Maistro RA: 24.223.011-8
+
+
+
 // main.c
 #include <stdio.h>
 #include "tarefas.h"

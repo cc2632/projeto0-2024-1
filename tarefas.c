@@ -8,6 +8,12 @@ ERROS criar(Tarefa tarefas[], int *pos){
 
     printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
+  if(tarefas[*pos].prioridade < 1){
+    tarefas[*pos].prioridade = 1;
+  } else if(tarefas[*pos].prioridade > 10){
+    tarefas[*pos].prioridade = 10;
+  }
+  clearBuffer();
     clearBuffer();
     printf("Entre com a categoria: ");
     fgets(tarefas[*pos].categoria, 100, stdin);

@@ -5,19 +5,23 @@
 ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
-
+ 
     printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
-    clearBuffer();
-    printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
-
-    printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
-
-    *pos = *pos + 1;
-
-    return OK;
+    if(tarefas[*pos].prioridade < 1 || tarefas[*pos].prioridade > 10) //limitando a prioridade 
+      return erro_prioridade;//se a prioridade for maior que 10 ou menor que 1, retornamos 1 erro. Esse novo erro esta no enum da tarefas.h
+    else
+      clearBuffer();
+      printf("Entre com a categoria: ");
+      fgets(tarefas[*pos].categoria, 100, stdin);
+      clearBuffer();//eliminando a quebra de linha
+      printf("Entre com a descricao: ");
+      fgets(tarefas[*pos].descricao, 300, stdin);
+      clearBuffer();//tirando a quebra de linha 
+    
+      *pos = *pos + 1;
+      
+      return OK;
 }
 
 ERROS deletar(Tarefa tarefas[], int *pos){

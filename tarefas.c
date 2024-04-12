@@ -1,6 +1,6 @@
 // tarefas.c
 
-#include "tarefass.h"
+#include "tarefas.h"
 #include <stdio.h>
 #include <string.h>
 #define TOTAL 100

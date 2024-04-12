@@ -72,8 +72,10 @@ ERROS listar(Tarefa tarefas[], int pos) {
         return SEM_TAREFAS;
 
     char categoria[100];
-    clearBuffer(); // Limpa o buffer antes de ler a categoria
-    printf("Entre com a categoria das tarefas que deseja listar (ou deixe vazio para listar todas as tarefas): ");
+    //clearBuffer(); // Limpa o buffer antes de ler a categoria
+
+    printf("Entre com a categoria das tarefas que deseja listar (ou deixe vazio para listar todas as tarefas: ");
+
     fgets(categoria, 100, stdin);
     tira_quebra_linha(categoria);
 

@@ -18,6 +18,8 @@ int main(){
         printf("3 - Listar tarefas\n");
         printf("4 - Listar tarefas por categoria\n");
         printf("5 - Exportar tarefas para arquivo de texto|n");
+        printf("6 - Salvar tarefas em arquivo binário\n"); 
+        printf("7 - Carregar tarefas de arquivo binário\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
 

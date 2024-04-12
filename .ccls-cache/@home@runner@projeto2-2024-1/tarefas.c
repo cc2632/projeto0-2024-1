@@ -103,6 +103,10 @@ ERROS listar_por_categoria(Tarefa tarefas[], int *pos){
 
 ERROS exportar (Tarefa tarefas[], int *pos);
 
+ERROS salvar_binario(Tarefa tarefas[], int *pos);
+
+ERROS carregar_binario (Tarefa tarefas[], int *pos);
+
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);

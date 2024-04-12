@@ -8,12 +8,16 @@ ERROS criar(Tarefa tarefas[], int *pos){
 
     printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
+      if (tarefas[*pos].prioridade <1 || tarefas[*pos].prioridade > 10){
+        printf("Prioridade inválida\n");
+        return PRIORIDADE;
+      }
     clearBuffer();
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
+    fgets(tarefas[*pos].categoria, CATEGORIA, stdin);
 
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
+    fgets(tarefas[*pos].descricao, DESCRICAO, stdin);
 
     *pos = *pos + 1;
 
@@ -45,16 +49,29 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 }
 
 ERROS listar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
+    if(*pos == 0){
         return SEM_TAREFAS;
+    }
+    char categoria[CATEGORIA];
+    printf("Entre com a categoria: ");
+    clearBuffer();
+    fgets(categoria, CATEGORIA, stdin);
 
+    int tarefasencontradas = 0;
+    
     for(int i=0; i<*pos; i++){
+      if(strcmp(tarefas[i].categoria, categoria)==0){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);
         printf("Categoria: %s\t", tarefas[i].categoria);
         printf("Descricao: %s\n", tarefas[i].descricao);
+        tarefasencontradas ++;
+      }
     }
-
+    if (tarefasencontradas == 0){
+      printf("Nenhuma tarefa encontrada na categoria '%s'", categoria);
+      return TAREFAS_CATEGORIA_NAO_ENCONTRADA;
+    }
     return OK;
 }
 
@@ -74,6 +91,49 @@ ERROS salvar(Tarefa tarefas[], int *pos){
     if(fclose(f))
         return FECHAR;
 
+    return OK;
+}
+
+ERROS exportar(Tarefa tarefas[], int *pos) { 
+    char categoria[CATEGORIA]; // usa a mesm logica da criação que lista categoria
+    printf("Digite a categoria que deseja exportar: ");
+    clearBuffer();
+    fgets(categoria, CATEGORIA, stdin);
+    categoria[strcmp(categoria, "\n")] = '\0';
+    int categoria_encontrada = 0;
+    for (int i = 0; i < *pos; i++){
+      if(strcmp(tarefas[i].categoria, categoria) == 0){
+        categoria_encontrada = 1;
+        break;
+      }
+    }
+    if (!categoria_encontrada){
+      printf("Categoria não encontrada\n");
+      return TAREFAS_CATEGORIA_NAO_ENCONTRADA;
+    }
+
+    char nome_arquivo[100]; // caracteres para o usuario nomear
+    printf("Digite o nome do arquivo para exportar as tarefas: ");
+    fgets(nome_arquivo, 100, stdin);
+    nome_arquivo[strcspn(nome_arquivo, "\n")] = 0; 
+  
+    FILE *arquivo = fopen(nome_arquivo, "w");
+    if (arquivo == NULL) {
+        printf("Erro ao criar o arquivo.\n");
+        return EXPORTAR_ARQUIVO;
+    }
+    int tarefas_exportadas = 0;
+    for (int i = 0; i < *pos; i++) {
+      if (strcmp(tarefas[i].categoria, categoria) == 0) {
+        fprintf(arquivo, "Prioridade: %d\n", tarefas[i].prioridade);
+        fprintf(arquivo, "Categoria: %s", tarefas[i].categoria);
+        fprintf(arquivo, "Descricao: %s", tarefas[i].descricao);
+        fprintf(arquivo, "\n");
+        tarefas_exportadas++;
+      }
+    }
+    fclose(arquivo);
+    printf("Tarefas exportadas com sucesso para o arquivo '%s'\n", nome_arquivo);
     return OK;
 }
 

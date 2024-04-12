@@ -26,6 +26,11 @@ ERROS criar(Tarefa tarefas[], int *pos){
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, 300, stdin);
 
+    // STRCSPN tras oque é similar entre as string, nessa comparação vai trazer tudo que é 
+    // vazio dentro da string que o usuario incluiu e vai jogar isso com NULO = \0
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = '\0';
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = '\0';
+
     *pos = *pos + 1;
 
     return OK;

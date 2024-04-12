@@ -7,7 +7,16 @@ typedef struct {
     char categoria[100];
 } Tarefa;
 
-typedef enum ERROS {OK, MAX_TAREFA, SEM_TAREFAS, NAO_ENCONTRADO, ABRIR, FECHAR, ESCREVER, LER} ERROS;
+typedef enum ERROS {
+    OK,
+    MAX_TAREFA,
+    SEM_TAREFAS,
+    NAO_ENCONTRADO,
+    ABRIR,
+    FECHAR,
+    ESCREVER,
+    LER
+} ERROS;
 
 typedef ERROS (funcao)(Tarefa[], int*);
 
@@ -16,5 +25,5 @@ ERROS deletar(Tarefa tarefas[], int *pos);
 ERROS listar(Tarefa tarefas[], int pos);
 ERROS salvar(Tarefa tarefas[], int *pos);
 ERROS carregar(Tarefa tarefas[], int *pos);
-
+ERROS exportarTarefas(Tarefa tarefas[], int *pos);
 void clearBuffer();

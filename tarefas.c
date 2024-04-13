@@ -104,9 +104,23 @@ ERROS salvar(Tarefa tarefas[], int *pos){
     if(f == NULL)
         return ABRIR;
 
-    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return ESCREVER;
+  char txt[] = ".txt";
+  char nomeArq[100];
+  printf("Entre com o nome do arquivo: ");
+  clearBuffer();
+  fgets(nomeArq, 100, stdin);
+  nomeArq[strcspn(nomeArq, "\n")] = '\0';
+  strcat(nomeArq, txt);
+
+  FILE *f = fopen(nomeArq, "w");
+  if (f == NULL)
+    return ABRIR;
+
+  for (int i = 0; i < *pos; i++) {
+     fprintf(f, "Prioridade: %d", tarefas[i].prioridade );
+    fprintf(f, "Categoria:  %s", tarefas[i].categoria);
+    fprintf(f, "Descricao:  %s\n", tarefas[i].descricao);
+  }
 
     qtd = fwrite(pos, 1, sizeof(int), f);
     if(qtd == 0)

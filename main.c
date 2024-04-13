@@ -18,8 +18,9 @@ int main(){
         printf("3 - Listar tarefas\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
-
+        
         scanf("%d", &opcao);
+        clearBuffer();
         opcao--;
         if(opcao > 2)
             printf("Opcao invalida\n");

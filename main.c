@@ -19,8 +19,9 @@ int main(){
         printf("3 - Listar tarefas\n");
         printf("0 - Sair, salvar e carregar tarefas\n");
         printf("Escolha uma opcao: ");
-
+        
         scanf("%d", &opcao);
+        clearBuffer();
         opcao--;
             ERROS erro = salvarbinario(tarefas, &pos);
             if (erro != OK)

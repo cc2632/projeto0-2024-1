@@ -9,6 +9,7 @@ typedef struct {
 
 } Tarefa;
 
+
 typedef enum {OK, MAX_TAREFA, SEM_TAREFAS, NAO_ENCONTRADO, ABRIR, FECHAR, ESCREVER, LER} ERROS;
 
 typedef ERROS (*funcao)(Tarefa[], int*);
@@ -20,3 +21,4 @@ ERROS salvar(Tarefa tarefas[], int *pos);
 ERROS carregar(Tarefa tarefas[], int *pos);
 
 void clearBuffer();
+

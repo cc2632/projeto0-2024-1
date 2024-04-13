@@ -1,34 +1,40 @@
-#include <stdio.h>
 #include "tarefas.h"
+#include <stdio.h>
 
-int main(){
-    funcao fs[] = {criar, deletar, listar, salvar, carregar};
+#define TAM_DESCRICAO 300
+#define TAM_CATEGORIA 100
 
-    Tarefa tarefas[TOTAL];
-    int pos;
-    ERROS erro = fs[4](tarefas, &pos);
-    if(erro != OK)
-        pos = 0;
+int main() {
+  funcao fs[] = {criar, deletar, listar, salvar, carregar};
 
-    int opcao;
-    do{
-        printf("\nMenu principal\n");
-        printf("1 - Criar tarefa\n");
-        printf("2 - Deletar tarefa\n");
-        printf("3 - Listar tarefas\n");
-        printf("0 - Sair\n");
-        printf("Escolha uma opcao: ");
+  Tarefa tarefas[TOTAL];
+  int pos;
+  ERROS erro = fs[4](tarefas, &pos);
+  if (erro != OK)
+    pos = 0;
 
-        scanf("%d", &opcao);
-        opcao--;
-        if(opcao > 2)
-            printf("Opcao invalida\n");
-        else if(opcao >= 0)
-            fs[opcao](tarefas, &pos);
-        else
-            printf("Sair...\n");
+  int opcao;
+  do {
+    printf("\nMenu principal\n");
+    printf("1 - Criar tarefa\n");
+    printf("2 - Deletar tarefa\n");
+    printf("3 - Listar tarefas\n");
+    printf("4 - Salvar e exportar\n");
+    printf("0 - Sair\n");
+    printf("Escolha uma opcao: ");
 
-    } while(opcao >= 0);
+    scanf("%d", &opcao);
+    opcao--;
+    if (opcao > 5)
+      printf("Opcao invalida\n");
+    else if (opcao >= 0)
+      fs[opcao](tarefas, &pos);
+    else if (opcao == 3)
+      fs[opcao](tarefas, &pos);
+    else
+      printf("Sair...\n");
 
-    fs[3](tarefas, &pos);
+  } while (opcao >= 0);
+
+  fs[3](tarefas, &pos);
 }

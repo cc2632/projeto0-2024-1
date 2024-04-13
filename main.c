@@ -29,25 +29,25 @@ int main() {
       if (resultado != OK) {
         switch (resultado) {
           case MAX_TAREFA:
-            printf("Erro: Numero maximo de tarefas atingido!\n");
+            printf("Numero maximo de tarefas atingido\n");
             break;
           case SEM_TAREFAS:
-            printf("Erro: Nao ha tarefas para realizar essa operacao!\n");
+            printf("Nao existe nenhuma tarefa, nao e possivel realizar essa operacao\n");
             break;
           case NAO_ENCONTRADO:
-            printf("Erro: Tarefa nao encontrada!\n");
+            printf("Tarefa nao encontrada\n");
             break;
           case ABRIR:
-            printf("Erro: Nao foi possivel abrir o arquivo!\n");
+            printf("Nao foi possivel abrir o arquivo!\n");
             break;
           case FECHAR:
-            printf("Erro: Nao foi possivel fechar o arquivo!\n");
+            printf("Nao foi possivel fechar o arquivo!\n");
             break;
           case ESCREVER:
-            printf("Erro: Nao foi possivel escrever no arquivo!\n");
+            printf("Nao foi possivel escrever no arquivo!\n");
             break;
           case LER:
-            printf("Erro: Nao foi possivel ler do arquivo!\n");
+            printf("Nao foi possivel ler do arquivo!\n");
             break;
           default:
             printf("Erro desconhecido!\n");

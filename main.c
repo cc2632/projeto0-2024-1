@@ -2,15 +2,15 @@
 #include "tarefas.h"
 
 int main(){
-    funcao fs[] = {criar, deletar, listar, salvar, carregar};
+    int opcao;
 
     Tarefa tarefas[TOTAL];
-    int pos;
-    ERROS erro = fs[4](tarefas, &pos);
-    if(erro != OK)
-        pos = 0;
+    int pos = 0;
+    ERROS erro = carregar(tarefas, &pos, TOTAL);
+    if(erro == ABRIR || erro == LER || erro == FECHAR)
+    pos = 0;
+    printf("Arquivo não encontrado\n");
 
-    int opcao;
     do{
         printf("\nMenu principal\n");
         printf("1 - Criar tarefa\n");
@@ -18,17 +18,34 @@ int main(){
         printf("3 - Listar tarefas\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
+scanf("%d", &opcao);
+    printf("Opcao escolhida: %d\n", opcao);
 
-        scanf("%d", &opcao);
-        opcao--;
-        if(opcao > 2)
-            printf("Opcao invalida\n");
-        else if(opcao >= 0)
-            fs[opcao](tarefas, &pos);
-        else
-            printf("Sair...\n");
+    if (opcao == 1) {
+      erro = criar(tarefas, &pos);
+      if(erro == MAX_TAREFA)
+        printf("Maximo de tarefas atingido\n");
 
-    } while(opcao >= 0);
+    } else if (opcao == 2) {
+      erro = deletar(tarefas, &pos);
+      if(erro == SEM_TAREFAS)
+        printf("Tarefa nao encontrada\n");
+    } else if (opcao == 3) {
+      erro = listar(tarefas, &pos);
+      if(erro == SEM_TAREFAS)
+        printf("Nao ha tarefas\n");
+      listar(tarefas, &pos);
+    } else if (opcao == 0)
+      printf("Sair...\n");
+      erro = salvar(tarefas, &pos, TOTAL);
+      if(erro == LER || erro == FECHAR)
+        printf("Erro ao ler as tarefas do arquivo\n");
+      else if (erro == ABRIR){
+        pos = 0;
+        printf("Arquivo não encontrado\n");
+      }
+    else
+      printf("Opcao invalida\n");
 
-    fs[3](tarefas, &pos);
+  } while (opcao != 0);
 }

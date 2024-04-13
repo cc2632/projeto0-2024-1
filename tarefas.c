@@ -6,14 +6,17 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: ");
+       printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
     clearBuffer();
+
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
+    fgets(tarefas[*pos].categoria, sizeof(tarefas[*pos].categoria), stdin);
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = '\0'; // Remove a quebra de linha
 
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
+    fgets(tarefas[*pos].descricao, sizeof(tarefas[*pos].descricao), stdin);
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = '\0'; // Remove a quebra de linha
 
     *pos = *pos + 1;
 
@@ -34,7 +37,7 @@ ERROS deletar(Tarefa tarefas[], int *pos){
         return NAO_ENCONTRADO;
 
     for(int i = pos_deletar; i < *pos; i++){
-        tarefas[i].prioridade = tarefas[i+1].prioridade;
+        tarefas[i].prioridade, tarefas[i+1].prioridade;
         strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
         strcpy(tarefas[i].descricao,  tarefas[i+1].descricao);
     }
@@ -45,9 +48,26 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 }
 
 ERROS listar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
-        return SEM_TAREFAS;
 
+    int Dado;
+    printf("Entre com a categoria: ");
+    scanf("%d",&Dado);
+
+
+    for(int i = 0; i < *pos; i++) {
+        if(tarefas[i].categoria == Dado) {
+            printf("Pos: %d\t", i+1);
+            printf("Prioridade: %d\t", tarefas[i].prioridade);
+            printf("Categoria: %s\t", tarefas[i].categoria);
+            printf("Descricao: %s\n", tarefas[i].descricao);
+            return OK;
+            }
+        else if(*pos == 0)
+            printf("Não a categorias registradas com essa especificação \n");
+            return SEM_TAREFAS;
+        }   
+
+    
     for(int i=0; i<*pos; i++){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);
@@ -58,7 +78,7 @@ ERROS listar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
-ERROS salvar(Tarefa tarefas[], int *pos){
+ERROS salvar(Tarefa tarefas[], int pos, int tamanho){
     FILE *f = fopen("tarefas.bin", "wb");
     if(f == NULL)
         return ABRIR;
@@ -77,23 +97,24 @@ ERROS salvar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
-ERROS carregar(Tarefa tarefas[], int *pos){
-    FILE *f = fopen("tarefas.bin", "rb");
-    if(f == NULL)
-        return ABRIR;
+ERROS carregar(Tarefa tarefas[], int *pos, int tamanho){
+  FILE *f = fopen("tarefas", "rb");
+  if (f == NULL)
+    return ABRIR;
 
-    int qtd = fread(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return LER;
+  int i = fread(tarefas, tamanho, sizeof(Tarefa), f);
+  if(i <= 0)
+    return LER;
 
-    qtd = fread(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return LER;
-
-    if(fclose(f))
-        return FECHAR;
-
-    return OK;
+  i = fread(pos, 1, sizeof(int), f);
+  if(i <= 0)
+    return LER;
+  
+  i = fclose(f);
+  if(i == 0)
+    return FECHAR;
+  
+  return OK;
 
 }
 

@@ -15,5 +15,6 @@ ERROS deletar(Tarefa tarefas[], int *pos);
 ERROS listar(Tarefa tarefas[], int *pos);
 ERROS salvar(Tarefa tarefas[], int *pos);
 ERROS carregar(Tarefa tarefas[], int *pos);
-
+ERROS salvarbinario(Tarefa tarefas[], int *pos);
+ERROS carregarbinario(Tarefa tarefa[], int *pos);
 void clearBuffer();

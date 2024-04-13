@@ -89,9 +89,9 @@ ERROS salvar(Tarefa tarefas[], int *pos){
     return ABRIR;
 
   for (int i = 0; i < *pos; i++) {
-    fprintf(f, "Prioridade:     %d", tarefas[i].prioridade);
-    fprintf(f, "Categoria:       %s", tarefas[i].categoria);
-    fprintf(f, "Descricao:       %s", tarefas[i].descricao);
+     fprintf(f, "Prioridade: %d", tarefas[i].prioridade );
+    fprintf(f, "Categoria:  %s", tarefas[i].categoria);
+    fprintf(f, "Descricao:  %s\n", tarefas[i].descricao);
   }
 
   // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);

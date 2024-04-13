@@ -8,28 +8,62 @@ int main(){
     Tarefa tarefas[TOTAL];
 
     int pos;
-    // Declaração da variável 'pos' que será usada para armazenar a posição atual no array 'tarefas'.
-    ERROS erro = fs[4](tarefas, &pos);// Chama a função de carregar tarefas do arquivo binário e armazena um possível erro retornado.
-    if(erro != OK)
+
+    ERROS erro = fs[4](tarefas, &pos);
+    if (erro == ABRIR) {
+        printf("Erro ao carregar o arquivo para abrir.\n");
         pos = 0;
 
-    int opcao; 
-    do{ // looping do menu
+    } else if (erro == FECHAR) {
+        printf("Erro ao carregar o arquivo para fechar.\n");
+        pos = 0;
+
+    } else if (erro == LER) {
+        printf("Erro ao carregar o arquivo para ler.\n");
+        pos = 0;
+    }
+
+    int opcao;
+    do{
+
         printf("\nMenu principal\n");
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
+        printf("4 - Salvar tarefas\n"); // Adiciona a opção de salvar tarefas
+        printf("5 - Carregar tarefas\n"); // Adiciona a opção de carregar tarefas
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
 
-        scanf("%d", &opcao);// Lê a opção do usuário.
+        scanf("%d", &opcao);
+
         opcao--;
-        if(opcao > 3) // Verifica se a opção é válida.
+        if(opcao > 4) {
             printf("Opcao invalida\n");
-        else if(opcao >= 0)
-            fs[opcao](tarefas, &pos); // Chama a função correspondente à opção escolhida pelo usuário.
-        else
-            printf("Sair...\n"); 
+        } else if (opcao == 0) {
+            erro = fs[opcao](tarefas, &pos);
+            if (erro == MAX_TAREFA) {
+                printf("Máximo de tarefas alcançadas\n");
+            }
+        } else if (opcao == 1) {
+            erro = fs[opcao](tarefas, &pos);
+            if (erro == SEM_TAREFAS) {
+                printf("Sem tarefas para deletar\n");
+            } else if (erro == NAO_ENCONTRADO) {
+                printf("Tarefa não existe\n");
+            }
+        } else if (opcao == 2) {
+            erro = fs[opcao](tarefas, &pos);
+            if (erro == NAO_ENCONTRADO) {
+                printf("Sem tarefas para listar\n");
+            }
+        }
+        else if(opcao == 3 || opcao == 4){
+            fs[opcao](tarefas, &pos); // Chama a função correspondente à opção
+        }else {
+            printf("Sair...\n");
+        }
+
 
     } while(opcao != -1); // Continua no loop até que o usuário escolha sair.
 
@@ -41,5 +75,15 @@ int main(){
             printf("Erro ao exportar as tarefas para o arquivo de texto!\n"); // mensagem de erro
     }
 
+    erro = fs[3](tarefas, &pos);
+    if (erro == ABRIR) {
+        printf("Erro para abrir o arquivo ao salvar\n");
+    } else if (erro == FECHAR) {
+        printf("Erro para fechar o arquivo ao salvar\n");
+    } else if (erro == ESCREVER) {
+        printf("Erro ao escrever no arquivo ao salvar\n");
+    }
+  
     return 0;
 }
+

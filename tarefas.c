@@ -6,15 +6,18 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: "); // Solicita e armazena a prioridade da tarefa.
-    scanf("%d", &tarefas[*pos].prioridade); // Solicita e armazena a prioridade da tarefa.
-    clearBuffer(); // Limpa o buffer do teclado.
-
-    printf("Entre com a categoria: "); // Solicita e armazena a categoria da tarefa.
-    fgets(tarefas[*pos].categoria, 100, stdin); // Solicita e armazena a categoria da tarefa.
-
-    printf("Entre com a descricao: "); // Solicita e armazena a descrição da tarefa.
-    fgets(tarefas[*pos].descricao, 300, stdin); // Solicita e armazena a descrição da tarefa.
+    do {
+    printf("Entre com a prioridade: ");
+    scanf("%d", &tarefas[*pos].prioridade);
+    clearBuffer();
+  } while (tarefas[*pos].prioridade < 1 || tarefas[*pos].prioridade > 10);
+  
+    printf("Entre com a categoria: ");
+    fgets(tarefas[*pos].categoria, MAX_CATEGORIA, stdin);
+    clearBuffer();
+    printf("Entre com a descricao: ");
+    fgets(tarefas[*pos].descricao, MAX_DESCRICAO, stdin);
+    clearBuffer();
 
     *pos = *pos + 1; // Atualiza a posição atual das tarefas.
 
@@ -50,12 +53,41 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
-      // Percorre todas as tarefas e as imprime na tela.
-    for(int i=0; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
+
+    clearBuffer();
+    char list_categoria[100]; // Declarando a variável pela qual será filtrada a lista
+    printf("Entre com a categoria pela qual deseja listar: "); // Pedindo para o usuário a categoria que ele deseja filtrar
+    fgets(list_categoria, 100, stdin); // Lendo a categoria
+    clearBuffer(); // Limpando o buffer do teclado
+
+    if(strcmp(list_categoria, "\n") == 0) {// Comparando o que o usuário escolheu com o \n
+        for (int i = 0; i < *pos; i++) { // Loop para percorrer todas as tarefas
+            printf("Pos: %d\t", i + 1); // Exibindo a posição da tarefa
+            printf("Prioridade: %d\t", tarefas[i].prioridade); // Exibindo a prioridade da tarefa
+            printf("Categoria: %s\t", tarefas[i].categoria); // Exibindo a categoria da tarefa
+            printf("Descricao: %s\n", tarefas[i].descricao); // Exibindo a descrição da tarefa
+        }
+    } else { // Caso contrário, o usuário digitou algo
+        int categoria_existe = 0; // Declarando a variável que será usada para verificar se a categoria já existe
+        for (int i = 0; i < *pos; i++) { // Loop para percorrer todas as tarefas
+            if (strcmp(list_categoria, tarefas[i].categoria) == 0) { // Comparando se alguma categoria das tarefas é igual a que o usuário digitou
+                categoria_existe = categoria_existe + 1; // Se a categoria existir, a variável categoria_existe recebe +1
+            }
+        }
+    
+        if (categoria_existe == 0){ // Se a variável categoria_existe for igual a 0, significa que a categoria que o usuário digitou não existe
+            printf("Não existe essa categoria."); // Exibindo mensagem de que não existe a categoria para o usuário
+        } else { // Caso contrário, a categoria que o usuário digitou existe
+            for (int i = 0; i < *pos; i++) { // Loop para percorrer todas as tarefas
+                if (strcmp(list_categoria, tarefas[i].categoria) == 0) { // Filtrando apenas as tarefas que possuem a categoria que o usuário digitou
+                    printf("Pos: %d\t", i + 1); // Exibindo a posição da tarefa
+                    printf("Prioridade: %d\t", tarefas[i].prioridade); // Exibindo a prioridade da tarefa
+                    printf("Categoria: %s\t", tarefas[i].categoria); // Exibindo a categoria da tarefa
+                    printf("Descricao: %s\n", tarefas[i].descricao); // Exiibindo a descrição da tarefa
+                }
+            }
+        }
+
     }
 
     return OK;

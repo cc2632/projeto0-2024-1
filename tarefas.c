@@ -1,6 +1,7 @@
+#include "tarefas.h"
 #include <stdio.h>
 #include <string.h>
-#include "tarefas.h"
+
 
 #define TAMANHO_CATEGORIA 100
 #define TAMANHO_DESCRICAO 300
@@ -21,18 +22,12 @@ ERROS criar(Tarefa tarefas[], int *pos){
             printf("Digite um valor entre 1 e 10");
     } while (prioridade < 1 || prioridade > 10);
 
-    tarefas[*pos].prioridade = prioridade;
-
+    tarefas[*pos].prioridade = prioridade; 
     printf("Entre com a categoria: ");
     fgets(tarefas[*pos].categoria, TAMANHO_CATEGORIA, stdin);
 
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, TAMANHO_DESCRICAO, stdin);
-
-    // STRCSPN tras oque é similar entre as string, nessa comparação vai trazer tudo que é 
-    // vazio dentro da string que o usuario incluiu e vai jogar isso com NULO = \0
-    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria, "\n")] = '\0';
-    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = '\0';
 
     *pos = *pos + 1;
 
@@ -63,22 +58,64 @@ ERROS deletar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
-ERROS listar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
-        return SEM_TAREFAS;
+ERROS listar(Tarefa tarefas[], int *pos) {
+      if (*pos == 0)
+          return SEM_TAREFAS;
+      char categoria_desejada[100];
+       clearBuffer();
+          printf("Entre com a categoria desejada (deixe em branco para listar todas): ");
+          // scanf(" %99[^\n]", categoria_desejada);
+          fgets(categoria_desejada, 100, stdin);
 
-    for(int i=0; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
-    }
 
-    return OK;
-}
+          printf("Tarefas com a categoria '%s'", categoria_desejada);
+              int encontrou_tarefa = 0;
+
+              for (int i = 0; i < *pos; i++) {
+                  if (strcmp(tarefas[i].categoria, categoria_desejada) == 0) {
+                      printf("Pos: %d\t", i + 1);
+                      printf("Prioridade: %d\t", tarefas[i].prioridade);
+                      printf("Categoria: %s\t", tarefas[i].categoria);
+                      printf("Descricao: %s\n", tarefas[i].descricao);
+                      encontrou_tarefa = 1;
+                  }
+              }
+
+              if (!encontrou_tarefa) {
+                printf("Nenhuma tarefa encontrada com a categoria '%s'\n", categoria_desejada);
+              }else{
+                printf("---- listando todas as tarefas ---- \n");
+
+                    for(int i=0; i<*pos; i++){
+                      printf("Pos: %d\t", i+1);
+                      printf("Prioridade: %d\t", tarefas[i].prioridade);
+                      printf("Categoria: %s\t", tarefas[i].categoria);
+                      printf("Descricao: %s\n", tarefas[i].descricao);
+                    }
+              }
+
+
+              // se categoria desejada tiver vazio imprime isso
+              //printf("---- listando todas as tarefas ---- \n");
+
+              //     for(int i=0; i<*pos; i++){
+              //       printf("Pos: %d\t", i+1);
+              //       printf("Prioridade: %d\t", tarefas[i].prioridade);
+              //       printf("Categoria: %s\t", tarefas[i].categoria);
+              //       printf("Descricao: %s\n", tarefas[i].descricao);
+              //     }
+
+              // se categoria desejada tiver com um valor que nao possui na categoria 
+              // retorno um printf com um aviso de que nao encontrou
+     return OK;
+  }
+
+
 
 ERROS salvar(Tarefa tarefas[], int *pos){
-
+    FILE *f = fopen("tarefas.bin", "wb");
+    if(f == NULL)
+        return ABRIR;o
     char txt[] = ".txt";
     char nomeArq[100];
     printf("Entre com o nome do arquivo: ");

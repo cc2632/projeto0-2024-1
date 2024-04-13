@@ -1,9 +1,8 @@
 //Projeto 2 de C
 
-//Erik Kenzo Hashizume
-//Gustavo Lima de Azevedo
+//Erik Kenzo Hashizume RA- 24.223.001-9
+//Gustavo Lima de Azevedo RA- 24.123.096.0
 //Rafael Vianna Maistro RA-24223011-8
-
 
 #include <stdio.h>
 #include "tarefas.h" // Inclui o cabeçalho que contém as definições das funções e estruturas utilizadas

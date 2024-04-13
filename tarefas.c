@@ -101,7 +101,7 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 
     return OK;
     ERROS salvarbinario(Tarefa tarefas[], int *pos){
-        FILE *f fopen = (tarefas-bin, "wb");
+        FILE *f = fopen("tarefas.bin", "wb");
         if (f == NULL)
             return ABRIR;
         fwrite(tarefas, sizeof(Tarefa), *pos, f);
@@ -111,7 +111,7 @@ ERROS carregar(Tarefa tarefas[], int *pos){
         
     }
     ERROS carregarbinario(Tarefa tarefas[], int *pos){
-        FILE *f fopen("tarefas.bin", "rb");
+        FILE *f = fopen("tarefas.bin", "rb");
         if (f == NULL)
             return ABRIR;
         *pos = fread(tarefas, sizeof(Tarefa), TOTAL, f);

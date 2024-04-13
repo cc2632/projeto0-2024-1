@@ -28,7 +28,7 @@ int main(){
         else
             printf("Tarefas salvas \n");
 
-        else if (opcao == 4){
+        if (opcao == 0){
             ERROS erro = carregarbinario(tarefas, &pos);
             if (erro != OK)
                 printf("Erro ao carregar tarefa\n");

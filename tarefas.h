@@ -16,7 +16,7 @@ typedef enum ERROS {
     FECHAR,
     ESCREVER,
     LER
-} ERROS;
+} ERROS; 
 
 typedef ERROS (funcao)(Tarefa[], int*);
 

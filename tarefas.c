@@ -67,7 +67,7 @@ ERROS listar(Tarefa tarefas[], int *pos) {
                       encontrou_tarefa = 1;
                   }
               }
-  
+
               if (!encontrou_tarefa) {
                 printf("Nenhuma tarefa encontrada com a categoria '%s'\n", categoria_desejada);
               }else{
@@ -81,7 +81,7 @@ ERROS listar(Tarefa tarefas[], int *pos) {
                     }
               }
 
-              
+
               // se categoria desejada tiver vazio imprime isso
               //printf("---- listando todas as tarefas ---- \n");
 
@@ -96,7 +96,7 @@ ERROS listar(Tarefa tarefas[], int *pos) {
               // retorno um printf com um aviso de que nao encontrou
      return OK;
   }
-     
+
 
 
 ERROS salvar(Tarefa tarefas[], int *pos){

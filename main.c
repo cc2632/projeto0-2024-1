@@ -24,13 +24,51 @@ int main() {
     opcao--;
     if (opcao  > 5)
       printf("Opcao invalida\n");
-    else if (opcao >= 0)
-      fs[opcao](tarefas, &pos);
-    else if (opcao == 3)
-      fs[opcao](tarefas, &pos);
-    else
+    else if (opcao >= 0) {
+      ERROS resultado = fs[opcao](tarefas, &pos);
+      if (resultado != OK) {
+        switch (resultado) {
+          case MAX_TAREFA:
+            printf("Numero maximo de tarefas atingido\n");
+            break;
+          case SEM_TAREFAS:
+            printf("Nao existe nenhuma tarefa, nao e possivel realizar essa operacao\n");
+            break;
+          case NAO_ENCONTRADO:
+            printf("Tarefa nao encontrada\n");
+            break;
+          case ABRIR:
+            printf("Nao foi possivel abrir o arquivo!\n");
+            break;
+          case FECHAR:
+            printf("Nao foi possivel fechar o arquivo!\n");
+            break;
+          case ESCREVER:
+            printf("Nao foi possivel escrever no arquivo!\n");
+            break;
+          case LER:
+            printf("Nao foi possivel ler do arquivo!\n");
+            break;
+          default:
+            printf("Erro desconhecido!\n");
+            break;
+        }
+      }
+    } else if (opcao == 3) {
+      ERROS resultado = fs[opcao](tarefas, &pos);
+      if (resultado != OK) {
+        switch (resultado) {
+          case SEM_TAREFAS:
+            printf("Erro: Nao ha tarefas para listar!\n");
+            break;
+          default:
+            printf("Erro desconhecido!\n");
+            break;
+        }
+      }
+    } else {
       printf("Sair...\n");
-
+    }
   } while (opcao >= 0);
 
   fs[3](tarefas, &pos);

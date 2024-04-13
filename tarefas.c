@@ -2,29 +2,30 @@
 #include <string.h>
 #include "tarefas.h"
 
+#define TAMANHO_CATEGORIA 100
+#define TAMANHO_DESCRICAO 300
+
 ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
- 
-  int prioridade;
-// Do while para forçar que o usuario entre com a prioridade entre 1 e 10
-  do {
-      printf("Entre com a prioridade: ");
-      scanf("%d", &prioridade);
-      clearBuffer();
-      if (prioridade < 1 || prioridade > 10)
-          printf("Digite um valor entre 1 e 10");
-  } while (prioridade < 1 || prioridade > 10);
+    int prioridade;
+    // Do while para forçar que o usuario entre com a prioridade entre 1 e 10
+    do {
+        printf("Entre com a prioridade: ");
+        scanf("%d", &prioridade);
+        clearBuffer();
+        if (prioridade < 1 || prioridade > 10)
+            printf("Digite um valor entre 1 e 10");
+    } while (prioridade < 1 || prioridade > 10);
 
-  tarefas[*pos].prioridade = prioridade;
-
+    tarefas[*pos].prioridade = prioridade;
 
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
+    fgets(tarefas[*pos].categoria, TAMANHO_CATEGORIA, stdin);
 
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
+    fgets(tarefas[*pos].descricao, TAMANHO_DESCRICAO, stdin);
 
     // STRCSPN tras oque é similar entre as string, nessa comparação vai trazer tudo que é 
     // vazio dentro da string que o usuario incluiu e vai jogar isso com NULO = \0
@@ -76,36 +77,36 @@ ERROS listar(Tarefa tarefas[], int *pos){
 
 ERROS salvar(Tarefa tarefas[], int *pos){
 
-  char txt[] = ".txt";
-  char nomeArq[100];
-  printf("Entre com o nome do arquivo: ");
-  clearBuffer();
-  fgets(nomeArq, 100, stdin);
-  nomeArq[strcspn(nomeArq, "\n")] = '\0';
-  strcat(nomeArq, txt);
+    char txt[] = ".txt";
+    char nomeArq[100];
+    printf("Entre com o nome do arquivo: ");
+    clearBuffer();
+    fgets(nomeArq, 100, stdin);
+    nomeArq[strcspn(nomeArq, "\n")] = '\0';
+    strcat(nomeArq, txt);
 
-  FILE *f = fopen(nomeArq, "w");
-  if (f == NULL)
-    return ABRIR;
+    FILE *f = fopen(nomeArq, "w");
+    if (f == NULL)
+        return ABRIR;
 
-  for (int i = 0; i < *pos; i++) {
-    fprintf(f, "Prioridade:     %d", tarefas[i].prioridade);
-    fprintf(f, "Categoria:       %s", tarefas[i].categoria);
-    fprintf(f, "Descricao:       %s", tarefas[i].descricao);
-  }
+    for (int i = 0; i < *pos; i++) {
+        fprintf(f, "Prioridade:     %d", tarefas[i].prioridade);
+        fprintf(f, "Categoria:       %s", tarefas[i].categoria);
+        fprintf(f, "Descricao:       %s", tarefas[i].descricao);
+    }
 
-  // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-  // if (qtd == 0)
-  //   return ESCREVER;
+    // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+    // if (qtd == 0)
+    //   return ESCREVER;
 
-  // qtd = fwrite(pos, 1, sizeof(int), f);
-  // if (qtd == 0)
-  //   return ESCREVER;
+    // qtd = fwrite(pos, 1, sizeof(int), f);
+    // if (qtd == 0)
+    //   return ESCREVER;
 
-  if (fclose(f))
-    return FECHAR;
-  printf("Salvo e exportado com sucesso!");
-  return OK;
+    if (fclose(f))
+        return FECHAR;
+    printf("Salvo e exportado com sucesso!");
+    return OK;
 }
 
 ERROS carregar(Tarefa tarefas[], int *pos){

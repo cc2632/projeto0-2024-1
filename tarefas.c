@@ -48,9 +48,26 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 }
 
 ERROS listar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
-        return SEM_TAREFAS;
 
+    int Dado;
+    printf("Entre com a categoria: ");
+    scanf("%d",&Dado);
+
+
+    for(int i = 0; i < *pos; i++) {
+        if(tarefas[i].categoria == Dado) {
+            printf("Pos: %d\t", i+1);
+            printf("Prioridade: %d\t", tarefas[i].prioridade);
+            printf("Categoria: %s\t", tarefas[i].categoria);
+            printf("Descricao: %s\n", tarefas[i].descricao);
+            return OK;
+            }
+        else if(*pos == 0)
+            printf("Não a categorias registradas com essa especificação \n");
+            return SEM_TAREFAS;
+        }   
+
+    
     for(int i=0; i<*pos; i++){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);

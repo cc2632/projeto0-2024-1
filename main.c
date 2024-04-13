@@ -17,9 +17,7 @@ int main(){
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
-        printf("5 - Carregar tarefa Binário\n");
-        printf("6 - Salvar tarefa em Binário\n");
-        printf("0 - Sair\n");
+        printf("0 - Sair, salvar e carregar tarefas\n");
         printf("Escolha uma opcao: ");
 
         scanf("%d", &opcao);
@@ -31,8 +29,8 @@ int main(){
             printf("Tarefas salvas \n");
 
         else if (opcao == 4){
-            ERROS erro = carregarbinario(tarrefas, &pos);
-            if (erro !== OK)
+            ERROS erro = carregarbinario(tarefas, &pos);
+            if (erro != OK)
                 printf("Erro ao carregar tarefa\n");
             else 
                 printf("Tarefa carregada\n");
@@ -43,7 +41,7 @@ int main(){
             
         else if(opcao >= 0)
             fs[opcao](tarefas, &pos);
-            if (erro != OK){//retornando um erro
+         if (erro != OK){//retornando um erro
               printf("Erro ao encontrar\n");
               return NAO_ENCONTRADO;
             }

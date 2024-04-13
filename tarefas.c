@@ -5,6 +5,8 @@
 #define TAMANHO_CATEGORIA 100
 #define TAMANHO_DESCRICAO 300
 
+void clearBuffer();
+
 ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
@@ -90,18 +92,10 @@ ERROS salvar(Tarefa tarefas[], int *pos){
         return ABRIR;
 
     for (int i = 0; i < *pos; i++) {
-        fprintf(f, "Prioridade:     %d", tarefas[i].prioridade);
-        fprintf(f, "Categoria:       %s", tarefas[i].categoria);
-        fprintf(f, "Descricao:       %s", tarefas[i].descricao);
+        fprintf(f, "Prioridade:     %d\n", tarefas[i].prioridade);
+        fprintf(f, "Categoria:       %s\n", tarefas[i].categoria);
+        fprintf(f, "Descricao:       %s\n\n", tarefas[i].descricao);
     }
-
-    // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-    // if (qtd == 0)
-    //   return ESCREVER;
-
-    // qtd = fwrite(pos, 1, sizeof(int), f);
-    // if (qtd == 0)
-    //   return ESCREVER;
 
     if (fclose(f))
         return FECHAR;

@@ -1,6 +1,9 @@
 #include "tarefas.h"
 #include <stdio.h>
 
+#define TAM_DESCRICAO 300
+#define TAM_CATEGORIA 100
+
 int main() {
   funcao fs[] = {criar, deletar, listar, salvar, carregar};
 
@@ -22,7 +25,7 @@ int main() {
 
     scanf("%d", &opcao);
     opcao--;
-    if (opcao  > 5)
+    if (opcao > 5)
       printf("Opcao invalida\n");
     else if (opcao >= 0)
       fs[opcao](tarefas, &pos);

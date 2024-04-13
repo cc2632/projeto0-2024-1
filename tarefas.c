@@ -6,15 +6,33 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: ");
-    scanf("%d", &tarefas[*pos].prioridade);
+    int prioridade;
+    do {
+        printf("Entre com a prioridade: ");
+        scanf("%d", &prioridade);
+        if ((prioridade > 0) && (prioridade < 11)){
+            tarefas[*pos].prioridade = prioridade;
+            
+        
+        // else if (prioridade > 10)
+        //     printf("Número de prioridade excedido, digite novamente por favor!");
+        }   
+        else{
+            printf("Numero de prioridade nao cabivel!\n");
+        }
+        
+        }while(prioridade <= 1 && prioridade >= 10);
+            
+    // clearBuffer();
+    // printf("Entre com a prioridade: ");
+    // fgets(tarefas[*pos].prioridade, 100, stdin);
+
     clearBuffer();
     printf("Entre com a categoria: ");
     fgets(tarefas[*pos].categoria, 100, stdin);
 
     printf("Entre com a descricao: ");
     fgets(tarefas[*pos].descricao, 300, stdin);
-
     *pos = *pos + 1;
 
     return OK;
@@ -33,7 +51,8 @@ ERROS deletar(Tarefa tarefas[], int *pos){
     if(pos_deletar >= *pos || pos_deletar < 0)
         return NAO_ENCONTRADO;
 
-    for(int i = pos_deletar; i < *pos; i++){
+    int i = 0;
+    for(i = pos_deletar; i < *pos; i++){
         tarefas[i].prioridade = tarefas[i+1].prioridade;
         strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
         strcpy(tarefas[i].descricao,  tarefas[i+1].descricao);
@@ -48,7 +67,8 @@ ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
 
-    for(int i=0; i<*pos; i++){
+    int i = 0;
+    for(i=0; i<*pos; i++){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);
         printf("Categoria: %s\t", tarefas[i].categoria);
@@ -100,4 +120,4 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
-}
+} 

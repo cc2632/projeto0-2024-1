@@ -6,6 +6,7 @@ int main(){
 
     Tarefa tarefas[TOTAL];
     int pos;
+    ERROS resultado;
     ERROS erro = fs[4](tarefas, &pos);
     if(erro != OK)
         pos = 0;
@@ -15,7 +16,7 @@ int main(){
         printf("\nMenu principal\n");
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
-        printf("3 - Listar tarefas\n");
+        printf("3 - Listar tarefas\n"); 
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
 
@@ -24,11 +25,17 @@ int main(){
         if(opcao > 2)
             printf("Opcao invalida\n");
         else if(opcao >= 0)
-            fs[opcao](tarefas, &pos);
+            resultado = fs[opcao](tarefas, &pos);
+            if(resultado != OK)
+                printf("Erro: %d\n", resultado);
         else
             printf("Sair...\n");
 
     } while(opcao >= 0);
 
-    fs[3](tarefas, &pos);
+    resultado = fs[3](tarefas, &pos);
+    if(resultado != OK)
+        printf("Erro ao salvar as tarefas: %d\n", resultado);
+    
+    return 0;
 }

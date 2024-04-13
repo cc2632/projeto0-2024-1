@@ -1,9 +1,11 @@
 #define TOTAL 100
+#define tamanho_D 300
+#define tamanho_C 300
 
 typedef struct {
     int prioridade;
-    char descricao[300];
-    char categoria[100];
+    char descricao[tamanho_C];
+    char categoria[tamanho_D];
 } Tarefa;
 
 typedef enum {OK, MAX_TAREFA, SEM_TAREFAS, NAO_ENCONTRADO, ABRIR, FECHAR, ESCREVER, LER} ERROS;

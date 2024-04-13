@@ -67,7 +67,7 @@ ERROS listar(Tarefa tarefas[], int *pos){
         printf("Descricao: %s\n", tarefas[i].descricao);
         encontradas++;
     }
-  
+   
     if(encontradas == 0)
       return SEM_TAREFAS;
     return OK;

@@ -8,12 +8,16 @@ ERROS criar(Tarefa tarefas[], int *pos){
 
     printf("Entre com a prioridade: ");
     scanf("%d", &tarefas[*pos].prioridade);
+    if (prioridade < 1)
+        print("Número de prioridade não cabível!");
+    else if (prioridade > 10)
+        print("Número de prioridade excedido, digite novamente por favor!");
     clearBuffer();
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, tamanho_C, stdin);
+    fgets(tarefas[*pos].categoria, 100, stdin);
 
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, tamanho_D, stdin);
+    fgets(tarefas[*pos].descricao, 300, stdin);
 
     *pos = *pos + 1;
 
@@ -100,4 +104,4 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
-}
+} 
